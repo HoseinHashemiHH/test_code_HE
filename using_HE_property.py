@@ -97,7 +97,15 @@ time_finish=time.time()
 #
 # In Pyfhel, you can either generate a relin key with HE.RelinKeyGen() or skip it
 # and call HE.relinearize() directly, in which case a warning is issued.
+# first usual method
+start_time_5=time.time()
+array_classic_methode=np.array(range(1,601), np.float64)
+arr_x = np.array(array_classic_methode, dtype=np.float64)    # Always use type float64!
 
+ptxt_x = HE.encodeFrac(arr_x)   # Creates a PyPtxt plaintext with the encoded arr_x
+
+ctxt_x = HE.encryptPtxt(ptxt_x) # Encrypts the plaintext ptxt_x and returns a PyCtxt
+finish_time_5=time.time()
 #print(ctxt_x_obtained_bytes)
 start_time_3=time.time()
 ptxt_x_bytes=HE.decryptFrac(encrypted_total[573])
@@ -128,8 +136,11 @@ finish_time_3=time.time()
 # dset_f=r_x
 # time_finish=time.time()
 # diff_time=np.abs(strt_time-time_finish)
-print(encrypted_total)
+# print(encrypted_total)
 print('enc(1) time',start_time_2-time_finish_2)
 print('H Add time: ', time_finish_1-start_time_1)
 print('decrypted time: ', finish_time_3-start_time_3)
 print(' encryption loop time: ', time_finish-start_time) 
+print(type(ctxt_x))
+print('''for classic methode when you encrypte 
+      an array with CSSK at once the time is (sec): \n''', finish_time_5-start_time_5)
